@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="439.0" prefWidth="310.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calculator_assignment.LayoutGUIController">
+    <stylesheets>
+        <URL value="@layoutgui.css" />
+    </stylesheets>
+   <children>
+      <Pane prefHeight="439.0" prefWidth="320.0">
+         <children>
+            <Button layoutX="185.0" layoutY="106.0" mnemonicParsing="false" onAction="#clearScreen" prefHeight="30.0" prefWidth="30.0" text="C" />
+            <Button layoutX="35.0" layoutY="173.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addNum" prefHeight="30.0" prefWidth="30.0" text="1" />
+            <Button layoutX="110.0" layoutY="173.0" mnemonicParsing="false" onAction="#addNum" prefHeight="30.0" prefWidth="30.0" text="2" />
+            <Button layoutX="185.0" layoutY="173.0" mnemonicParsing="false" onAction="#addNum" prefHeight="30.0" prefWidth="30.0" text="3" />
+            <Button layoutX="35.0" layoutY="233.0" mnemonicParsing="false" onAction="#addNum" prefHeight="30.0" prefWidth="30.0" text="4" />
+            <Button layoutX="110.0" layoutY="233.0" mnemonicParsing="false" onAction="#addNum" prefHeight="30.0" prefWidth="30.0" text="5" />
+            <Button layoutX="185.0" layoutY="233.0" mnemonicParsing="false" onAction="#addNum" prefHeight="30.0" prefWidth="30.0" text="6" />
+            <Button layoutX="35.0" layoutY="293.0" mnemonicParsing="false" onAction="#addNum" prefHeight="30.0" prefWidth="30.0" text="7" />
+            <Button layoutX="110.0" layoutY="293.0" mnemonicParsing="false" onAction="#addNum" prefHeight="30.0" prefWidth="30.0" text="8" />
+            <Button layoutX="185.0" layoutY="293.0" mnemonicParsing="false" onAction="#addNum" prefHeight="30.0" prefWidth="30.0" text="9" />
+            <Button layoutX="255.0" layoutY="106.0" mnemonicParsing="false" onAction="#arithOp" prefHeight="30.0" prefWidth="30.0" text="÷" />
+            <Button layoutX="255.0" layoutY="173.0" mnemonicParsing="false" onAction="#arithOp" prefHeight="30.0" prefWidth="30.0" text="x" />
+            <Button layoutX="255.0" layoutY="233.0" mnemonicParsing="false" onAction="#arithOp" prefHeight="30.0" prefWidth="30.0" text="-" />
+            <Button layoutX="255.0" layoutY="293.0" mnemonicParsing="false" onAction="#arithOp" prefHeight="30.0" prefWidth="30.0" text="+" />
+            <Button layoutX="35.0" layoutY="354.0" mnemonicParsing="false" onAction="#negNum" prefHeight="30.0" prefWidth="40.0" text="+/-" />
+            <Button layoutX="110.0" layoutY="354.0" mnemonicParsing="false" onAction="#addNum" prefHeight="30.0" prefWidth="30.0" text="0" />
+            <Button layoutX="185.0" layoutY="354.0" mnemonicParsing="false" onAction="#addDec" prefHeight="30.0" prefWidth="30.0" text="." />
+            <Button layoutX="255.0" layoutY="354.0" mnemonicParsing="false" onAction="#processReturn" prefHeight="30.0" prefWidth="30.0" text="=" />
+            <TextField fx:id="txtFld" alignment="CENTER_RIGHT" layoutX="35.0" layoutY="27.0" prefHeight="50.0" prefWidth="250.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </TextField>
+            <Text layoutX="35.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="World's Most Incredible Calculator" wrappingWidth="96.57666015625" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
