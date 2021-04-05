@@ -46,6 +46,14 @@ public class Week9Assignment extends Application {
         double answer = radians * (180/Math.PI);//convert radians to degrees
         return answer;
     }
+    
+    public double line1Distance;
+    public double line2Distance;
+    public double line3Distance;
+    public double aRadians;
+    public double bRadians;
+    public double cRadians;
+    
   
 
     @Override
@@ -84,7 +92,6 @@ public class Week9Assignment extends Application {
         point3.setFill(Color.BLACK);
         
         //create line between point 1 and point 2
-        //side2
         Line line1 = new Line();
         line1.setStroke(Color.RED);
         line1.setStartX(point1.getCenterX());
@@ -94,7 +101,6 @@ public class Week9Assignment extends Application {
        // double line1Distance = Math.sqrt(Math.pow((line1.getEndX()-line1.getStartX()), 2) + Math.pow((line1.getEndY() - line1.getStartY()), 2));
         
         //create line between point 1 and 3
-        //side1
         Line line2 = new Line();
         line2.setStroke(Color.GREEN);
         line2.setStartX(point1.getCenterX());
@@ -104,7 +110,6 @@ public class Week9Assignment extends Application {
        // double line2Distance = Math.sqrt(Math.pow((line2.getEndX()-line2.getStartX()), 2) + Math.pow((line2.getEndY() - line2.getStartY()), 2));
         
         //create line between point 2 and 3
-        //side3
         Line line3 = new Line();
         line3.setStroke(Color.BLUE);
         line3.setStartX(point2.getCenterX());
@@ -152,29 +157,35 @@ public class Week9Assignment extends Application {
         EventHandler<MouseEvent> pointOneOnMouseDraggedEventHandler = new EventHandler<MouseEvent>(){
         @Override
        public void handle(MouseEvent e){
+            
             //when the circle is dragged by mouse do this:
             //on circle perimeter formula: (x- center_x)^2 + (y-center_y)^2 == radius^2
-            
-   
             if(Math.pow(e.getSceneX() - circle.getCenterX(), 2) + Math.pow(e.getSceneY() - circle.getCenterY(), 2) <= Math.pow(circle.getRadius(), 2) && Math.pow(e.getSceneX() - circle.getCenterX(), 2) + Math.pow(e.getSceneY() - circle.getCenterY(), 2) > Math.pow(circle.getRadius(), 2)-400){
                 
                 point1.setCenterX(e.getSceneX()); //this sets circle center x coordinate to wherever the mouse drags it along the screen
                 point1.setCenterY(e.getSceneY());
-                line1.setStartX(e.getSceneX());
+                line1.setStartX(e.getSceneX()); //move line 1 wherever the point1 is moving
                 line1.setStartY(e.getSceneY());
                 
-                line2.setStartX(e.getSceneX());
+                line2.setStartX(e.getSceneX()); //move line 2 wherever the point1 is moving
                 line2.setStartY(e.getSceneY());
                 
-                /* the code below is an attempt to calculate length of each line using distance formula
-                double line1Distance = Math.sqrt(Math.pow((line1.getEndX()-line1.getStartX()), 2) + Math.pow((line1.getEndY() - line1.getStartY()), 2));
-                double line2Distance = Math.sqrt(Math.pow((line2.getEndX()-line2.getStartX()), 2) + Math.pow((line2.getEndY() - line2.getStartY()), 2));
-                double line3Distance = Math.sqrt(Math.pow((line3.getEndX()-line3.getStartX()), 2) + Math.pow((line3.getEndY() - line3.getStartY()), 2));
-                angleA.setX(line1.getStartX());
-                angleA.setY(line1.getStartY());
                 
-                displayAngleA.setText("Angle A: " + (int)calcAngleA(line2Distance, line1Distance, line3Distance));
-*/
+                angleA.setX(line1.getStartX()); //this moves the 'A' wherever the line moves so we know where angle A is at all times
+                angleA.setY(line1.getStartY());
+           
+                //calculate length of each line using distance formula to use in angle calc formula
+                line1Distance = Math.sqrt(Math.pow((line1.getEndX()-line1.getStartX()), 2) + Math.pow((line1.getEndY() - line1.getStartY()), 2));
+                line2Distance = Math.sqrt(Math.pow((line2.getEndX()-line2.getStartX()), 2) + Math.pow((line2.getEndY() - line2.getStartY()), 2));
+                line3Distance = Math.sqrt(Math.pow((line3.getEndX()-line3.getStartX()), 2) + Math.pow((line3.getEndY() - line3.getStartY()), 2));
+                
+                //calculate angle for each point adn convert from radians to degrees. Then display in top left of screen
+                aRadians = Math.acos(((line3Distance*line3Distance)-(line2Distance*line2Distance)-(line1Distance*line1Distance)) / (-2*(line1Distance*line2Distance)));
+                displayAngleA.setText("Angle A Degrees: " + (int)(aRadians * (180/Math.PI)));
+                bRadians = Math.acos(((line3Distance*line3Distance)-(line1Distance*line1Distance)-(line2Distance*line2Distance)) / (-2*(line2Distance*line1Distance)));
+                displayAngleB.setText("Angle B Degrees: " + (int)(bRadians * (180/Math.PI)));
+                cRadians = Math.acos(((line1Distance*line1Distance)-(line2Distance*line2Distance)-(line3Distance*line3Distance)) / (-2*(line3Distance*line2Distance)));
+                displayAngleC.setText("Angle C Degrees: " + (int)(cRadians * (180/Math.PI)));
                 
                
             }
@@ -193,17 +204,30 @@ public class Week9Assignment extends Application {
             if(Math.pow(e.getSceneX() - circle.getCenterX(), 2) + Math.pow(e.getSceneY() - circle.getCenterY(), 2) <= Math.pow(circle.getRadius(), 2) && Math.pow(e.getSceneX() - circle.getCenterX(), 2) + Math.pow(e.getSceneY() - circle.getCenterY(), 2) > Math.pow(circle.getRadius(), 2)-400){
                 point2.setCenterX(e.getSceneX()); //this sets circle center x coordinate to wherever the mouse drags it along the screen
                 point2.setCenterY(e.getSceneY());
-                line1.setEndX(e.getSceneX());
+                line1.setEndX(e.getSceneX()); //move the end of line1 whereever point2 is moving
                 line1.setEndY(e.getSceneY());
                 
                 line3.setStartX(e.getSceneX());//move start X coordinate of line 3 to whatever x value the mouse drags it
                 line3.setStartY(e.getSceneY()); //move start Y coordinate of line 3 to whatever y vaue the mouse drags it
-              
-                
-               
-                
-                angleB.setX(line1.getEndX());
+
+                angleB.setX(line1.getEndX()); //move 'B' whereever point2 is moving so we know where angle B is at all times
                 angleB.setY(line1.getEndY());
+                
+                //calculate length of each line using distance formula to use in angle calc formula
+                line1Distance = Math.sqrt(Math.pow((line1.getEndX()-line1.getStartX()), 2) + Math.pow((line1.getEndY() - line1.getStartY()), 2));
+                line2Distance = Math.sqrt(Math.pow((line2.getEndX()-line2.getStartX()), 2) + Math.pow((line2.getEndY() - line2.getStartY()), 2));
+                line3Distance = Math.sqrt(Math.pow((line3.getEndX()-line3.getStartX()), 2) + Math.pow((line3.getEndY() - line3.getStartY()), 2));
+                
+                //calculate angle for each point adn convert from radians to degrees. Then display in top left of screen
+                aRadians = Math.acos(((line3Distance*line3Distance)-(line2Distance*line2Distance)-(line1Distance*line1Distance)) / (-2*(line1Distance*line2Distance)));
+                displayAngleA.setText("Angle A Degrees: " + (int)(aRadians * (180/Math.PI)));
+                bRadians = Math.acos(((line2Distance*line2Distance)-(line1Distance*line1Distance)-(line3Distance*line3Distance)) / (-2*(line3Distance*line2Distance)));
+                displayAngleB.setText("Angle B Degrees: " + (int)(bRadians * (180/Math.PI)));
+                cRadians = Math.acos(((line1Distance*line1Distance)-(line2Distance*line2Distance)-(line3Distance*line3Distance)) / (-2*(line3Distance*line2Distance)));
+                displayAngleC.setText("Angle C Degrees: " + (int)(cRadians * (180/Math.PI)));
+                
+                
+                
             }
         }      //sets circle y axis to wherever mouse drags it 
                
@@ -228,7 +252,24 @@ public class Week9Assignment extends Application {
                 
                 angleC.setX(line2.getEndX());
                 angleC.setY(line2.getEndY());
-            }//sets circle y axis to wherever mouse drags it 
+                
+                
+                //calculate length of each line using distance formula to use in angle calc formula 
+                line1Distance = Math.sqrt(Math.pow((line1.getEndX()-line1.getStartX()), 2) + Math.pow((line1.getEndY() - line1.getStartY()), 2));
+                line2Distance = Math.sqrt(Math.pow((line2.getEndX()-line2.getStartX()), 2) + Math.pow((line2.getEndY() - line2.getStartY()), 2));
+                line3Distance = Math.sqrt(Math.pow((line3.getEndX()-line3.getStartX()), 2) + Math.pow((line3.getEndY() - line3.getStartY()), 2));
+   
+                
+                //calculate angle for each point adn convert from radians to degrees. Then display in top left of screen
+                aRadians = Math.acos(((line3Distance*line3Distance)-(line2Distance*line2Distance)-(line1Distance*line1Distance)) / (-2*(line1Distance*line2Distance)));
+                displayAngleA.setText("Angle A Degrees: " + (int)(aRadians * (180/Math.PI)));
+                bRadians = Math.acos(((line2Distance*line2Distance)-(line1Distance*line1Distance)-(line3Distance*line3Distance)) / (-2*(line3Distance*line2Distance)));
+                displayAngleB.setText("Angle B Degrees: " + (int)(bRadians * (180/Math.PI)));
+                cRadians = Math.acos(((line1Distance*line1Distance)-(line2Distance*line2Distance)-(line3Distance*line3Distance)) / (-2*(line3Distance*line2Distance)));
+                displayAngleC.setText("Angle C Degrees: " + (int)(cRadians * (180/Math.PI)));
+                
+               
+            }
         }        
     };
         
