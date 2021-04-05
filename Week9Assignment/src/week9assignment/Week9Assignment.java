@@ -182,7 +182,7 @@ public class Week9Assignment extends Application {
                 //calculate angle for each point adn convert from radians to degrees. Then display in top left of screen
                 aRadians = Math.acos(((line3Distance*line3Distance)-(line2Distance*line2Distance)-(line1Distance*line1Distance)) / (-2*(line1Distance*line2Distance)));
                 displayAngleA.setText("Angle A Degrees: " + (int)(aRadians * (180/Math.PI)));
-                bRadians = Math.acos(((line3Distance*line3Distance)-(line1Distance*line1Distance)-(line2Distance*line2Distance)) / (-2*(line2Distance*line1Distance)));
+                bRadians = Math.acos(((line2Distance*line2Distance)-(line1Distance*line1Distance)-(line3Distance*line3Distance)) / (-2*(line1Distance*line3Distance)));
                 displayAngleB.setText("Angle B Degrees: " + (int)(bRadians * (180/Math.PI)));
                 cRadians = Math.acos(((line1Distance*line1Distance)-(line2Distance*line2Distance)-(line3Distance*line3Distance)) / (-2*(line3Distance*line2Distance)));
                 displayAngleC.setText("Angle C Degrees: " + (int)(cRadians * (180/Math.PI)));
@@ -221,7 +221,7 @@ public class Week9Assignment extends Application {
                 //calculate angle for each point adn convert from radians to degrees. Then display in top left of screen
                 aRadians = Math.acos(((line3Distance*line3Distance)-(line2Distance*line2Distance)-(line1Distance*line1Distance)) / (-2*(line1Distance*line2Distance)));
                 displayAngleA.setText("Angle A Degrees: " + (int)(aRadians * (180/Math.PI)));
-                bRadians = Math.acos(((line2Distance*line2Distance)-(line1Distance*line1Distance)-(line3Distance*line3Distance)) / (-2*(line3Distance*line2Distance)));
+                bRadians = Math.acos(((line2Distance*line2Distance)-(line1Distance*line1Distance)-(line3Distance*line3Distance)) / (-2*(line1Distance*line3Distance)));
                 displayAngleB.setText("Angle B Degrees: " + (int)(bRadians * (180/Math.PI)));
                 cRadians = Math.acos(((line1Distance*line1Distance)-(line2Distance*line2Distance)-(line3Distance*line3Distance)) / (-2*(line3Distance*line2Distance)));
                 displayAngleC.setText("Angle C Degrees: " + (int)(cRadians * (180/Math.PI)));
@@ -263,7 +263,7 @@ public class Week9Assignment extends Application {
                 //calculate angle for each point adn convert from radians to degrees. Then display in top left of screen
                 aRadians = Math.acos(((line3Distance*line3Distance)-(line2Distance*line2Distance)-(line1Distance*line1Distance)) / (-2*(line1Distance*line2Distance)));
                 displayAngleA.setText("Angle A Degrees: " + (int)(aRadians * (180/Math.PI)));
-                bRadians = Math.acos(((line2Distance*line2Distance)-(line1Distance*line1Distance)-(line3Distance*line3Distance)) / (-2*(line3Distance*line2Distance)));
+                bRadians = Math.acos(((line2Distance*line2Distance)-(line1Distance*line1Distance)-(line3Distance*line3Distance)) / (-2*(line1Distance*line3Distance)));
                 displayAngleB.setText("Angle B Degrees: " + (int)(bRadians * (180/Math.PI)));
                 cRadians = Math.acos(((line1Distance*line1Distance)-(line2Distance*line2Distance)-(line3Distance*line3Distance)) / (-2*(line3Distance*line2Distance)));
                 displayAngleC.setText("Angle C Degrees: " + (int)(cRadians * (180/Math.PI)));
