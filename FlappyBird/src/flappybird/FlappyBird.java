@@ -22,7 +22,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.util.Random;
+import javafx.animation.Animation;
+import javafx.animation.Animation.Status;
 import javafx.animation.PauseTransition;
+import javafx.geometry.Point2D;
 
 /**
  *
@@ -39,17 +42,12 @@ public class FlappyBird extends Application {
         launch(args);
     }
     
-    //method to return random Y coordinate to place pipe gap randomly
-    //this is just a test really I haven't finalized the use of this
-    public int getRandPlacement(){
-        
-        return((int)(Math.random()* 500) + 100);
-    }
+
     
    
 
-    Rectangle[] pipes = new Rectangle[30];
-    Rectangle[] pipeGaps = new Rectangle[30];
+    Rectangle[] pipes = new Rectangle[300];
+    Rectangle[] pipeGaps = new Rectangle[300];
     TranslateTransition[] pipeTransitions = new TranslateTransition[pipes.length];
     TranslateTransition[] pipeGapTransitions = new TranslateTransition[pipes.length];
 
@@ -66,31 +64,37 @@ public class FlappyBird extends Application {
     }
     
     public void setPipeGaps(Rectangle[] rects, int width){
-        int gapHeight = 100;
+        int gapHeight = 120;
         for (int i =0; i < rects.length; i++){
             rects[i] = new Rectangle();
             rects[i].setX(width + 42);
-            rects[i].setY((int)(Math.random()* 800) + 50); //whyyy when I run this it doubles or triples pipe gaps?????
-            //rects[i].setY(400);
+            rects[i].setY((int)(Math.random()* 600) + 50); //whyyy when I run this it doubles or triples pipe gaps?????
             rects[i].setStrokeWidth(0);
             rects[i].setStroke(Color.SKYBLUE);
             rects[i].setWidth(60);
-            rects[i].setHeight(100);//(int)(Math.random()* 200) + 50);
+            rects[i].setHeight(gapHeight);//(int)(Math.random()* 200) + 50);
             rects[i].setFill(Color.SKYBLUE);
+            
+            
         }
     }
     
     public void setPipeAnimations(TranslateTransition[] animations, int width, Rectangle[] rects){
+        
+        
         for (int i = 0, delayTime= 1; i < rects.length; i++, delayTime+=2){
+            
             animations[i] = new TranslateTransition();
             animations[i].setByX(-(width + 150));
             animations[i].setDuration(Duration.seconds(6));//5 seconds to move across the screen
-            animations[i].setCycleCount(TranslateTransition.INDEFINITE);//repeat indefinitely
+            animations[i].setCycleCount(1);//TranslateTransition.INDEFINITE);//repeat indefinitely
             animations[i].setNode(rects[i]); //sets animation to move first rect object  
             animations[i].setDelay(Duration.seconds(delayTime));
             animations[i].play();
-        }
-        
+           
+            
+  
+    }
     }
     
      public void setPipeGapAnimations(TranslateTransition[] animations, int width, Rectangle[] rects){
@@ -98,13 +102,74 @@ public class FlappyBird extends Application {
             animations[i] = new TranslateTransition();
             animations[i].setByX(-(width + 150));
             animations[i].setDuration(Duration.seconds(6));//5 seconds to move across the screen
-            animations[i].setCycleCount(TranslateTransition.INDEFINITE);//repeat indefinitely
+            animations[i].setCycleCount(1);//repeat indefinitely
             animations[i].setNode(rects[i]); //sets animation to move first rect object  
             animations[i].setDelay(Duration.seconds(delayTime));
             animations[i].play();
+          
+         
         }
         
     }
+     
+     public TranslateTransition setGravity(Circle circle){
+        TranslateTransition gravity = new TranslateTransition();
+        gravity.setByY(700);
+        gravity.setDuration(Duration.seconds(4));
+        gravity.setCycleCount(TranslateTransition.INDEFINITE);
+        gravity.setNode(circle);
+        
+        return(gravity);
+     }
+     
+     public void playGravity(TranslateTransition gravity){
+         gravity.play();
+     } 
+     
+     public boolean hitsBird(Circle circle, Rectangle[] pipeGaps, TranslateTransition[] pipeGapAnimations){
+         boolean result = false;
+         for (int i =0; i< pipeGaps.length; i++){
+             if(pipeGapAnimations[i].getStatus()==Status.RUNNING){
+                 if(getCurrentPipeXPosition(pipeGaps[i]) == getCurrentBirdXPosition(circle) && getCurrentPipeYPosition(pipeGaps[i]) == getCurrentBirdYPosition(circle)){
+                     result = true;
+                 }
+                 
+             }
+         }
+         
+         
+         return result;
+     }
+     
+     public double getCurrentBirdYPosition(Circle circle){
+        Scene scene2 = circle.getScene();
+        Point2D sceneCoord = new Point2D(scene2.getX(), scene2.getY());
+        Point2D circleCoord = circle.localToScene(0.0,0.0); 
+        return(Math.round(circleCoord.getY() + 700));
+     }
+     public double getCurrentBirdXPosition(Circle circle){
+        Scene scene2 = circle.getScene();
+        Point2D sceneCoord = new Point2D(scene2.getX(), scene2.getY());
+        Point2D circleCoord = circle.localToScene(0.0,0.0); 
+        return(Math.round(circleCoord.getX()));
+     }
+     
+     public double getCurrentPipeYPosition(Rectangle pipe){
+        Scene scene2 = pipe.getScene();
+        Point2D sceneCoord = new Point2D(scene2.getX(), scene2.getY());
+        Point2D pipeCoord = pipe.localToScene(0.0,0.0); 
+        return(Math.round(pipeCoord.getY() + 700));
+     }
+     
+     public double getCurrentPipeXPosition(Rectangle pipe){
+        Scene scene2 = pipe.getScene();
+        Point2D sceneCoord = new Point2D(scene2.getX(), scene2.getY());
+        Point2D pipeCoord = pipe.localToScene(0.0,0.0); 
+        return(Math.round(pipeCoord.getX()));
+     }
+
+     
+     
     
     
 
@@ -112,87 +177,32 @@ public class FlappyBird extends Application {
     public void start(Stage stage) throws Exception {
         int stageWidth = 1000;
         int stageHeight = 1000;
-        //int gapHeight = 100;
-        int jumpHeight = 50;
         
-       
-        setPipes(pipes, stageWidth, stageHeight); //set 30 different pipes
-        setPipeAnimations(pipeTransitions, stageWidth, pipes);
-        setPipeGaps(pipeGaps, stageWidth);
-        setPipeAnimations(pipeGapTransitions, stageWidth, pipeGaps);
-
-        
-        //this rect object is the one pipe moving across the screen
-        /*Rectangle rect = new Rectangle();
-        rect.setX(stageWidth);
-        rect.setY(0);
-        rect.setWidth(40);
-        rect.setHeight(stageHeight);
-        rect.setFill(Color.GREEN);*/
-        
-        //this rect is the gap on the main pipe that the bird must jump through
-       /* Rectangle rect2 = new Rectangle(); //make a gap in a pipe
-        rect2.setX(stageWidth);
-        rect2.setY(getRandPlacement());
-        rect2.setStrokeWidth(0);
-        rect2.setStroke(Color.SKYBLUE);
-        rect2.setWidth(40);
-        rect2.setHeight(gapHeight);
-        rect2.setFill(Color.SKYBLUE);*/
-        
-        //testing bird as a circle
+         //testing bird as a circle
         Circle circle = new Circle(15);
         circle.setCenterX(50);
         circle.setCenterY(700);
-                
         
-   
-        //this TranslateTransition animates the green pipe from the right to the left of the screen
-        /*TranslateTransition transition = new TranslateTransition();
-        transition.setByX(-(stageWidth + 100));
-        transition.setDuration(Duration.seconds(5));//5 seconds to move across the screen
-        transition.setCycleCount(TranslateTransition.INDEFINITE);//repeat indefinitely
-        transition.setNode(rect); //sets animation to move first rect object
-        transition.play();*/
+        setPipes(pipes, stageWidth, stageHeight); 
+        setPipeAnimations(pipeTransitions, stageWidth, pipes);
+        setPipeGaps(pipeGaps, stageWidth);
+        setPipeGapAnimations(pipeGapTransitions, stageWidth, pipeGaps);
+
         
+      
         
-        //set array of animations for each pipe
-        /*for(int i =0; i < pipeTransitions.length-1; i++){
-            
-            pipeTransitions[i].play();
-            //pipeTransitions[i+1].setDelay(Duration.seconds(1));
-        }*/
-        
-        
-        
-        /*TranslateTransition transitionTest = new TranslateTransition();
-        transitionTest.setByX(-(stageWidth + 100));
-        transitionTest.setDuration(Duration.seconds(5));//5 seconds to move across the screen
-        transitionTest.setCycleCount(TranslateTransition.INDEFINITE);//repeat indefinitely
-        transitionTest.setNode(pipes[5]); //sets animation to move first rect object
-        transitionTest.setDelay(Duration.seconds(1));
-        transitionTest.play();*/
-     
-        
-        
-        
-        
-        //this TranslateTransition animates pipe gap on top of green pipe animation
-        /*TranslateTransition pipeGap = new TranslateTransition();
-        pipeGap.setByX(-(stageWidth + 100));
-        pipeGap.setDuration(Duration.seconds(5));
-        pipeGap.setCycleCount(TranslateTransition.INDEFINITE);
-        pipeGap.setNode(rect2);
-        pipeGap.play();*/
-        
+       
+        //playPipeGapAnimations(pipeGapTransitions);
+  
+    
         //this TranslateTransition animation pushes circle to the bottom when not jumping (acting as gravity)
         TranslateTransition gravity = new TranslateTransition();
         gravity.setByY(700);
-        gravity.setDuration(Duration.seconds(4));
+        gravity.setDuration(Duration.seconds(2));
         gravity.setCycleCount(TranslateTransition.INDEFINITE);
         gravity.setNode(circle);
-        //gravity.setDelay(Duration.millis(180));
         
+        //animation to jump bird up by 30 pixels each time space bar is pressed
         TranslateTransition jump = new TranslateTransition();
         jump.setByY(-30);
         jump.setDuration(Duration.millis(1));
@@ -213,21 +223,28 @@ public class FlappyBird extends Application {
             root.getChildren().add(pipeGaps[i]);
         }
         
+        
         root.getChildren().add(circle);
         Scene scene = new Scene(root, stageHeight, stageWidth, Color.SKYBLUE);
         stage.setScene(scene);
         
         
-        
         //when space bar is pushed play jump animation moving bird up each time it is pressed
         //each time space bar is pushed stop previous gravity animation if playing and restart gravity on current jump
+      
+        
         scene.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.SPACE){
-                  
+                    
+                    
                     gravity.stop();
                     jump.play();
+                    
+                    //this just printing current Y coordinate of bird as jump animation is playing
+                    if(jump.getStatus()==Status.RUNNING)
+                        System.out.println(getCurrentBirdYPosition(circle));
+                    
             }
-                    System.out.println(circle.getLocalToSceneTransform());
 
 
         });
@@ -235,7 +252,12 @@ public class FlappyBird extends Application {
        scene.setOnKeyReleased(e -> {
            jump.stop();
            gravity.play();
+           
+       
+           
        });
+        
+      
       
         stage.show();
         
