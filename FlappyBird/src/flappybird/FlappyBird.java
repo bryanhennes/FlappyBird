@@ -183,6 +183,10 @@ public class FlappyBird extends Application {
         circle.setCenterX(50);
         circle.setCenterY(700);
         
+        Circle circle2 = new Circle(15);
+        circle.setCenterX(50);
+        circle.setCenterY(700);
+        
         setPipes(pipes, stageWidth, stageHeight); 
         setPipeAnimations(pipeTransitions, stageWidth, pipes);
         setPipeGaps(pipeGaps, stageWidth);
