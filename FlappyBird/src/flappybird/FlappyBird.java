@@ -5,7 +5,7 @@
  */
 package flappybird;
 
-import java.io.File;
+
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -74,9 +74,11 @@ public class FlappyBird extends Application {
     ImageView titleImageView;
     Image titleImage;
    
-    
+    /**
+     * @param takes no parameters
+     */
     void addPipe(){
-        int space =400;
+        int space =350;
         int width = 100;
         int height = 50+(int)(Math.random()*600);
         
@@ -85,7 +87,9 @@ public class FlappyBird extends Application {
  
     }
     
-  
+    /**
+     * @param takes no parameters
+     */
      
      void hitsPipe(){
          
@@ -104,6 +108,9 @@ public class FlappyBird extends Application {
      
      }
      
+     /**
+     * @param takes no parameters
+     */
      
      //run this method if game is not being launched for the first time
      void startNewGame(){
@@ -139,7 +146,9 @@ public class FlappyBird extends Application {
          
      }
      
-  
+    /**
+     * @param takes no parameters
+     */
      
      void startGame(){
          bird.setCenterX(50);

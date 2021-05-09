@@ -29,7 +29,10 @@ public class Bird extends Circle {
         this.bird.setFill(this.ip);
     }
     
-    
+    /**
+     * @param takes no parameters
+     * @return returns circle object
+     */
     public Circle getBird(){
         return bird;
         
